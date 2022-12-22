@@ -1,13 +1,17 @@
 from tkinter import *
 
 class Input:
-    def __init__(self, root):
-        root["pady"] = 10
+    def __init__(self):
+        self.input_window = Tk()
+        self.input_window["pady"] = 10
+        self.input_window.resizable(0,0)
+
         self.fonte_padrao = ("Arial", "10")
-        self.input_container = Frame(root, width=540, height=80)
+        self.input_container = Frame(self.input_window, width=540, height=80)
         self.input_container["highlightbackground"] = "gray"
         self.input_container["highlightthickness"] = 0.5
         self.input_container.pack_propagate(0)
+        self.input_container.pack()
 
         self.input_label = Label(self.input_container, text="CSV file", font=self.fonte_padrao)
         self.input_label["padx"] = 20

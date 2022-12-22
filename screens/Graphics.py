@@ -1,13 +1,13 @@
 from tkinter import *
 
-class Parameters:
+class Graphics:
     def __init__(self,):
-        self.parameters_window = Tk()
-        self.parameters_window["pady"] = 10
-        self.parameters_window.resizable(0,0)
+        self.graphics_window = Tk()
+        self.graphics_window["pady"] = 10
+        self.graphics_window.resizable(0,0)
 
         self.fonte_padrao = ("Arial", "10")
-        self.parameters_container = Frame(self.parameters_window)
+        self.parameters_container = Frame(self.graphics_window)
         self.parameters_container.pack()
 
         self.test_size_container = Frame(self.parameters_container, width=540, height=80)
@@ -35,7 +35,7 @@ class Parameters:
         self.metrics_label.pack(side=LEFT)
 
         option_list = ["Accuracy", "Precision", "Recall", "F1-score"]
-        value_inside = StringVar( self.parameters_window)
+        value_inside = StringVar( self.graphics_window)
         value_inside.set("Select an Option")
 
         metrics_option_menu = OptionMenu(self.metrics_container, value_inside, *option_list)

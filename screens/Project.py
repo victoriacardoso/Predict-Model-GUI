@@ -1,13 +1,17 @@
 from tkinter import *
 
 class Project:
-    def __init__(self, root):
-        root["pady"] = 10
+    def __init__(self):
+        self.project_window = Tk()
+        self.project_window["pady"] = 10
+        self.project_window.resizable(0,0)
+
         self.fonte_padrao = ("Arial", "10")
-        self.project_container = Frame(root, width=540, height=80)
+        self.project_container = Frame(self.project_window, width=540, height=80)
         self.project_container["highlightbackground"] = "gray"
         self.project_container["highlightthickness"] = 0.5
         self.project_container.pack_propagate(0)
+        self.project_container.pack()
 
         self.projeto_label = Label(self.project_container, text="Project Name", font=self.fonte_padrao)
         self.projeto_label["padx"] = 20

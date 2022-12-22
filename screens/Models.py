@@ -1,11 +1,14 @@
 from tkinter import *
 
 class Models:
-    def __init__(self, root):
-        root["pady"] = 10
-        self.fonte_padrao = ("Arial", "10")
+    def __init__(self):
+        self.models_window = Tk()
+        self.models_window["pady"] = 10
+        self.models_window.resizable(0,0)
 
-        self.models_container = Frame(root)
+        self.fonte_padrao = ("Arial", "10")
+        self.models_container = Frame(self.models_window)
+        self.models_container.pack()
 
         self.select_model_container = Frame(self.models_container, width=540, height=80)
         self.select_model_container["highlightbackground"] = "gray"
@@ -22,7 +25,7 @@ class Models:
                         "DecisionTreeClassifier", 
                         "Artificial Neural Network with Keras",
                         "Random Forest"]
-        value_inside = StringVar(root)
+        value_inside = StringVar(self.models_window)
         value_inside.set("Select an Option")
 
         metrics_option_menu = OptionMenu(self.select_model_container, value_inside, *option_list)

@@ -3,61 +3,58 @@ from screens.Project import Project
 from screens.Input import Input
 from screens.Parameters import Parameters
 from screens.Models import Models
+from screens.Graphics import Graphics
 
 root = Tk()
 root.title("Predict model GUI")
 root.resizable(0,0)
 root.geometry("550x400")
 
-project =  Project(root)
-project.project_container.pack()
-input = Input(root)
-parameters = Parameters(root)
-models = Models(root)
-
 def open_project_interface():
-    if input.input_container.winfo_exists:
-        input.input_container.pack_forget()
-    if parameters.parameters_container.winfo_exists:
-        parameters.parameters_container.pack_forget()
-    if models.models_container.winfo_exists:
-        models.models_container.pack_forget()
-    project.project_container.pack()
+    Project()
 
+   
 def open_input_interface():
-    if project.project_container.winfo_exists:
-        project.project_container.pack_forget()
-    if models.models_container.winfo_exists:
-        models.models_container.pack_forget()
-    if parameters.parameters_container.winfo_exists:
-        parameters.parameters_container.pack_forget()
-    input.input_container.pack()
+    Input()
+
 
 def open_parameters_interface():
-    if project.project_container.winfo_exists:
-        project.project_container.pack_forget()
-    if input.input_container.winfo_exists:
-        input.input_container.pack_forget()
-    if models.models_container.winfo_exists:
-        models.models_container.pack_forget()
-    parameters.parameters_container.pack()
+    Parameters()
 
 def open_models_interface():
-    if project.project_container.winfo_exists:
-        project.project_container.pack_forget()
-    if input.input_container.winfo_exists:
-        input.input_container.pack_forget()
-    if parameters.parameters_container.winfo_exists:
-        parameters.parameters_container.pack_forget()
-    models.models_container.pack()
+    Models()
+
+def open_graphics_interface():
+    Graphics()
 
 menu_bar = Menu()
-menu_bar.add_command(label="Project", command=open_project_interface)
-menu_bar.add_command(label="Input", command=open_input_interface)
-menu_bar.add_command(label="Models", command= open_models_interface)
-menu_bar.add_command(label="Parameters", command=open_parameters_interface)
-menu_bar.add_command(label="Grafics")
-menu_bar.add_command(label="About")
-
 root.config(menu=menu_bar)
+
+project_menu = Menu(menu_bar, tearoff=False)
+menu_bar.add_cascade(label="Project", menu=project_menu)
+project_menu.add_command(label="Save", command=open_project_interface)
+project_menu.add_command(label="Load", command=open_project_interface)
+project_menu.add_command(label="Exit", command=open_project_interface)
+
+input_menu = Menu(menu_bar, tearoff=False)
+menu_bar.add_cascade(label="Input", menu=input_menu)
+input_menu.add_command(label="CSV", command=open_input_interface)
+
+parameters_menu = Menu(menu_bar, tearoff=False)
+menu_bar.add_cascade(label="Parameters", menu=parameters_menu)
+parameters_menu.add_command(label="Add Parameters", command=open_parameters_interface)
+
+models_menu = Menu(menu_bar, tearoff=False)
+menu_bar.add_cascade(label="Models", menu=models_menu)
+models_menu.add_command(label="Add Models", command=open_models_interface)
+
+graphics_menu = Menu(menu_bar, tearoff=False)
+menu_bar.add_cascade(label="Graphics", menu=graphics_menu)
+graphics_menu.add_command(label="View graphics", command=open_models_interface)
+
+about_menu = Menu(menu_bar, tearoff=False)
+menu_bar.add_cascade(label="About", menu=about_menu)
+about_menu.add_command(label="User Guide", command=open_models_interface)
+about_menu.add_command(label="About us", command=open_models_interface)
+
 root.mainloop()
