@@ -4,6 +4,7 @@ from screens.Input import Input
 from screens.Parameters import Parameters
 from screens.Models import Models
 from screens.Graphics import Graphics
+from screens.About import About
 
 root = Tk()
 root.title("Predict model GUI")
@@ -13,10 +14,8 @@ root.geometry("550x400")
 def open_project_interface():
     Project()
 
-   
 def open_input_interface():
     Input()
-
 
 def open_parameters_interface():
     Parameters()
@@ -26,6 +25,9 @@ def open_models_interface():
 
 def open_graphics_interface():
     Graphics()
+
+def open_about_interface():
+    About()
 
 menu_bar = Menu()
 root.config(menu=menu_bar)
@@ -50,11 +52,11 @@ models_menu.add_command(label="Add Models", command=open_models_interface)
 
 graphics_menu = Menu(menu_bar, tearoff=False)
 menu_bar.add_cascade(label="Graphics", menu=graphics_menu)
-graphics_menu.add_command(label="View graphics", command=open_models_interface)
+graphics_menu.add_command(label="View graphics")
 
 about_menu = Menu(menu_bar, tearoff=False)
 menu_bar.add_cascade(label="About", menu=about_menu)
 about_menu.add_command(label="User Guide", command=open_models_interface)
-about_menu.add_command(label="About us", command=open_models_interface)
+about_menu.add_command(label="About us", command=open_about_interface)
 
 root.mainloop()
