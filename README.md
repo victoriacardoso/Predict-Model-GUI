@@ -1,6 +1,6 @@
 # Predict-Model-GUI
 Aplicação desktop para predição automática de genes procariotos usando técnicas de Machine Learning
 
-##Executar
+## Executar
 
 `python Main.py`
