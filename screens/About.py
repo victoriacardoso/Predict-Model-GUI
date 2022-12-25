@@ -3,18 +3,17 @@ from tkinter import *
 class About:
     def __init__(self,):
         self.about_window = Toplevel()
-        # self.about_window.geometry("550x300")
         self.about_window.title("About")
         self.about_window.resizable(0,0)
 
-        self.fonte_titulo = ("Century Schoolbook L", "14", "bold")
+        self.fonte_titulo = ("Century Schoolbook L", "12", "bold")
         self.fonte_subtitulo = ("Century Schoolbook L", "10")
         self.about_container = Frame(self.about_window)
         self.about_container["pady"] = 5
         # self.about_container.pack_propagate(0)
         self.about_container.pack()
 
-        self.image_group = PhotoImage(file='image/biod.png')
+        self.image_group = PhotoImage(file='assets/biod.png')
 
         self.label_image = Label(self.about_container, image=self.image_group)
         self.label_image.image = self.image_group

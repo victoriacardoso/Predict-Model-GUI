@@ -1,18 +1,23 @@
 from tkinter import *
-from screens.Project import Project
+from screens.SaveProject import SaveProject
 from screens.Input import Input
 from screens.Parameters import Parameters
 from screens.Models import Models
 from screens.Graphics import Graphics
 from screens.About import About
+from screens.LoadProject import LoadProject
+from database.DatabaseConnection import DatabaseConnection
 
 root = Tk()
 root.title("Predict model GUI")
 root.resizable(0,0)
 root.geometry("550x400")
 
-def open_project_interface():
-    Project()
+def open_save_project_interface():
+    SaveProject()
+
+def open_load_project_interface():
+    LoadProject()
 
 def open_input_interface():
     Input()
@@ -34,9 +39,9 @@ root.config(menu=menu_bar)
 
 project_menu = Menu(menu_bar, tearoff=False)
 menu_bar.add_cascade(label="Project", menu=project_menu)
-project_menu.add_command(label="Save", command=open_project_interface)
-project_menu.add_command(label="Load", command=open_project_interface)
-project_menu.add_command(label="Exit", command=open_project_interface)
+project_menu.add_command(label="Save", command=open_save_project_interface)
+project_menu.add_command(label="Load", command=open_load_project_interface)
+project_menu.add_command(label="Exit", command=root.quit)
 
 input_menu = Menu(menu_bar, tearoff=False)
 menu_bar.add_cascade(label="Input", menu=input_menu)
@@ -56,7 +61,8 @@ graphics_menu.add_command(label="View graphics")
 
 about_menu = Menu(menu_bar, tearoff=False)
 menu_bar.add_cascade(label="About", menu=about_menu)
-about_menu.add_command(label="User Guide", command=open_models_interface)
+about_menu.add_command(label="User Guide")
 about_menu.add_command(label="About us", command=open_about_interface)
 
+DatabaseConnection().start()
 root.mainloop()
