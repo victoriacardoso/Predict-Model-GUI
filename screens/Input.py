@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter.filedialog import askopenfilename
+from database.DatabaseConnection import DatabaseConnection
 
 class Input:
     def __init__(self,):
@@ -33,7 +34,7 @@ class Input:
         self.save["text"] = "Save"
         self.save["font"] = self.fonte_padrao
         self.save["width"] = 5
-        self.save["command"] = self.open_file
+        self.save["command"] = self.save_input
         self.save.pack(side=BOTTOM, pady=5)
     
     def open_file(self):
@@ -44,5 +45,7 @@ class Input:
         self.path.insert(0, file_name)
         self.path.config(state='disabled')
 
-    
+    def save_input(self):
+        DatabaseConnection().insert_input(self.path.get())
+        self.input_window.destroy()
     

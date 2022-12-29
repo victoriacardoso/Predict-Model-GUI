@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from database.DatabaseConnection import DatabaseConnection
 
 class LoadProject:
     def __init__(self):
@@ -24,27 +25,23 @@ class LoadProject:
         self.load_project["text"] = "Load"
         self.load_project["font"] = self.fonte_padrao
         self.load_project["width"] = 5
-        self.load_project["command"] = self.save_project
+        # self.load_project["command"] = self.save_project
         self.load_project.pack(side=LEFT, padx=5)
 
         self.remove_project = Button(self.load_button_container)
         self.remove_project["text"] = "Remove"
         self.remove_project["font"] = self.fonte_padrao
         self.remove_project["width"] = 5
-        self.remove_project["command"] = self.save_project
+        # self.remove_project["command"] = self.save_project
         self.remove_project.pack(side=LEFT)
 
         self.update = Button(self.load_button_container)
         self.update["text"] = "Update parameters"
         self.update["font"] = self.fonte_padrao
         self.update["width"] = 15
-        self.update["command"] = self.save_project
+        # self.update["command"] = self.save_project
         self.update.pack(side=LEFT, padx=5)
 
-
-    def save_project(self):
-        self.msg["text"] = "Save"
-    
     def open_table(self):
         style = ttk.Style()
         #Pick a theme
@@ -73,16 +70,25 @@ class LoadProject:
         #Configure the scrollbar
         tree_scroll.config(command=my_tree.yview)
 
-        my_tree["columns"] = ("Name", "Date", "Status")
+        my_tree["columns"] = ("id", "Name", "Date", "Status")
         my_tree.column("#0", width=0, stretch=NO)
-        my_tree.column("Name", anchor=CENTER, width=140)
-        my_tree.column("Date", anchor=CENTER, width=100)
-        my_tree.column("Status", anchor=CENTER, width=140)
-
+        my_tree.column("id", anchor=CENTER, width=10)
+        my_tree.column("Name", anchor=CENTER, width=100)
+        my_tree.column("Date", anchor=CENTER, width=150)
+        my_tree.column("Status", anchor=CENTER, width=130)
+        
         my_tree.heading("#0", text="", anchor=W)
+        my_tree.heading("id", text="id", anchor=CENTER)
         my_tree.heading("Name", text="Name", anchor=CENTER)
         my_tree.heading("Date", text="Date", anchor=CENTER)
         my_tree.heading("Status", text="Status", anchor=CENTER)
+
+        data = DatabaseConnection().get_project()
+        # DatabaseConnection().disconnect()
+        for record in data:
+	        my_tree.insert(parent='', index='end', text="", values=(record[0], record[1], record[2], record[3]))
+
+        
 
         
 

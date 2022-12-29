@@ -1,8 +1,9 @@
 from tkinter import *
+from database.DatabaseConnection import DatabaseConnection
 
 class SaveProject:
     def __init__(self):
-        self.project_window = Tk()
+        self.project_window = Toplevel()
         self.project_window.geometry("500x100")
         self.project_window.title("Save Project")
         self.project_window["pady"] = 10
@@ -32,7 +33,8 @@ class SaveProject:
 
 
     def save_project(self):
-        self.msg["text"] = "Save"
-    
+        DatabaseConnection().insert_project(self.project.get())
+        self.project_window.destroy()
+
 
 
