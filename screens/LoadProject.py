@@ -83,7 +83,7 @@ class LoadProject:
         my_tree.heading("Date", text="Date", anchor=CENTER)
         my_tree.heading("Status", text="Status", anchor=CENTER)
 
-        data = DatabaseConnection().get_project()
+        data = DatabaseConnection().get_projects()
         # DatabaseConnection().disconnect()
         for record in data:
 	        my_tree.insert(parent='', index='end', text="", values=(record[0], record[1], record[2], record[3]))

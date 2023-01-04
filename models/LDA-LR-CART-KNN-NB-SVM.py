@@ -14,7 +14,7 @@ from sklearn.model_selection import cross_validate
 import warnings
 
 
-def predict():
+def predict(test_size, metrics):
   df = pd.read_csv("datasetMaior6.csv", sep=";")
   df.head()
 
@@ -26,10 +26,14 @@ def predict():
   labelencoder_Y = LabelEncoder()
   y = labelencoder_Y.fit_transform(y)
 
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3,stratify = y,shuffle = True, random_state = 1)
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = test_size, stratify = y,shuffle = True, random_state = 1)
   print(len(X_train),len(X_test),len(y_train),len(y_test))
 
   warnings.filterwarnings("ignore")
+
+  chosen_metrics = metrics.split("\n")
+  print(chosen_metrics)
+  
   scoring = {'acc': 'accuracy', 
               'precision_macro': 'precision_macro',
               'recall_macro': 'recall_macro', 

@@ -4,7 +4,7 @@ from database.DatabaseConnection import DatabaseConnection
 
 class Input:
     def __init__(self,):
-        self.input_window = Tk()
+        self.input_window = Toplevel()
         self.input_window.geometry("500x130")
         self.input_window.title("Input CSV")
         self.input_window["pady"] = 5

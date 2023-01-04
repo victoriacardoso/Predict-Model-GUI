@@ -5,7 +5,8 @@ from datetime import datetime
 class DatabaseConnection:
     conn = sqlite3.connect("database/database.db")
     cursor = conn.cursor()
-
+    id_project = ""
+        
     def disconnect(self):
         self.conn.close()
 
@@ -45,12 +46,11 @@ class DatabaseConnection:
         self.conn.commit()
 
     def insert_project(self, project_name):
-        project_sql = """ INSERT INTO project (name, creation_date, status, input, id_models) values (?, ?, ?, ?,?)"""
-       
+        last_id = self.cursor.lastrowid
         now = datetime.now()
-        # dd/mm/YY H:M:S
         date = now.strftime("%m/%d/%Y %H:%M:%S")
-        
+
+        project_sql = """ INSERT INTO project (name, creation_date, status, input, id_models) values (?, ?, ?, ?,?)"""
         data_tuple = (project_name, date, "", "", "")
 
         self.cursor.execute(project_sql, data_tuple)
@@ -58,11 +58,56 @@ class DatabaseConnection:
     
     def insert_input(self, input):
         last_id = self.cursor.lastrowid
+    
         project_sql = """UPDATE project set input=? WHERE id_project=?"""
         data_tuple = (input, last_id)
 
         self.cursor.execute(project_sql, data_tuple)
         self.conn.commit()
+
+    def insert_parameter(self, test_size, metrics):
+        last_id = self.cursor.lastrowid
+        parameter_sql = """ INSERT INTO parameter (test_size, metrics, id_project) values (?, ?, ?)"""
+        data_tuple = (test_size, metrics, last_id)
+        self.cursor.execute(parameter_sql, data_tuple)
+        self.conn.commit()
+
+    def insert_id_models(self, id_models):
+        last_id = self.cursor.lastrowid
+        
+        project_sql = """UPDATE project set id_models=? WHERE id_project=?"""
+        data_tuple = (input, last_id)
+
+        self.cursor.execute(project_sql, data_tuple)
+        self.conn.commit()
+    
+    def verify_project(self):
+        last_id = self.cursor.lastrowid
+        project = self.get_project_by_id(last_id)
+
+        if len(project) == 0 :
+            return False
+        else:
+            row_project = project[0]
+            if row_project[4] == "":
+                return True
+            else:
+                return True
+
+    def verify_parameter(self):
+        last_id = self.cursor.lastrowid
+        parameter = self.get_parameter_by_id(last_id)
+        project = self.get_project_by_id(last_id)
+
+        if len(parameter) == 0 and len(project) !=0:
+            record = project[0]
+            input = record[4]
+            if input != "":
+                return False
+            else:
+                return True
+        else:
+            return True
 
     def convertToBinaryData(self, filename):
     # Convert digital data to binary format
@@ -95,12 +140,24 @@ class DatabaseConnection:
             model_file = "models/" + name + ".py"
             self.writeTofile(content, model_file)
         
-    def get_project(self):
+    def get_projects(self):
         retrieve_project = """ SELECT * from project"""
         self.cursor.execute(retrieve_project)
 
         record = self.cursor.fetchall()
         return record
+
+    def get_project_by_id(self, id_project):
+        retrieve_project = """ SELECT * from project where id_project=?"""
+        self.cursor.execute(retrieve_project, (id_project,))
+        project = self.cursor.fetchall()
+        return project
+
+    def get_parameter_by_id(self, id):
+        retrieve_parameter = """ SELECT * from parameter where id_project=?"""
+        self.cursor.execute(retrieve_parameter, (id,))
+        parameter = self.cursor.fetchall()
+        return parameter
 
     def start(self):
         self.create_project_table()

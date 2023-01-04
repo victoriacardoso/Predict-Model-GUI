@@ -35,6 +35,7 @@ class SaveProject:
     def save_project(self):
         DatabaseConnection().insert_project(self.project.get())
         self.project_window.destroy()
+    
 
 
 
